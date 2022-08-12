@@ -124,33 +124,6 @@
            </layout>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_3">
-            <item>
-             <widget class="QLineEdit" name="RightLineEdit">
-              <property name="inputMask">
-               <string/>
-              </property>
-              <property name="text">
-               <string notr="true"/>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-              <property name="placeholderText">
-               <string notr="true">Enter Right Value</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="RightPushButton">
-              <property name="text">
-               <string>RIGHT</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
            <layout class="QHBoxLayout" name="horizontalLayout_2">
             <item>
              <widget class="QLineEdit" name="DownLineEdit">
@@ -172,6 +145,33 @@
              <widget class="QPushButton" name="DownPushButton">
               <property name="text">
                <string>DOWN</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <item>
+             <widget class="QLineEdit" name="RightLineEdit">
+              <property name="inputMask">
+               <string/>
+              </property>
+              <property name="text">
+               <string notr="true"/>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="placeholderText">
+               <string notr="true">Enter Right Value</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="RightPushButton">
+              <property name="text">
+               <string>RIGHT</string>
               </property>
              </widget>
             </item>

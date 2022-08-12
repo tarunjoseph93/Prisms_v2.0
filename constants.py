@@ -1,0 +1,3 @@
+ZABER_SERIAL_PORT_NAME = 'COM3'
+# Use path only for Linux
+ZABER_SERIAL_PORT_PATH = '/dev/' + ZABER_SERIAL_PORT_NAME

@@ -7,6 +7,11 @@
 
 
 from PyQt6 import QtCore, QtGui, QtWidgets
+import zaber_movements
+import constants as con
+import serial
+
+from zaber_movements.movement_main import MovementMain
 
 
 class Ui_PrismsMainWindow(object):
@@ -82,19 +87,6 @@ class Ui_PrismsMainWindow(object):
         self.UpPushButton.setObjectName("UpPushButton")
         self.horizontalLayout.addWidget(self.UpPushButton)
         self.verticalLayout.addLayout(self.horizontalLayout)
-        self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
-        self.RightLineEdit = QtWidgets.QLineEdit(self.centralwidget)
-        self.RightLineEdit.setInputMask("")
-        self.RightLineEdit.setText("")
-        self.RightLineEdit.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
-        self.RightLineEdit.setPlaceholderText("Enter Right Value")
-        self.RightLineEdit.setObjectName("RightLineEdit")
-        self.horizontalLayout_3.addWidget(self.RightLineEdit)
-        self.RightPushButton = QtWidgets.QPushButton(self.centralwidget)
-        self.RightPushButton.setObjectName("RightPushButton")
-        self.horizontalLayout_3.addWidget(self.RightPushButton)
-        self.verticalLayout.addLayout(self.horizontalLayout_3)
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.DownLineEdit = QtWidgets.QLineEdit(self.centralwidget)
@@ -108,6 +100,19 @@ class Ui_PrismsMainWindow(object):
         self.DownPushButton.setObjectName("DownPushButton")
         self.horizontalLayout_2.addWidget(self.DownPushButton)
         self.verticalLayout.addLayout(self.horizontalLayout_2)
+        self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
+        self.RightLineEdit = QtWidgets.QLineEdit(self.centralwidget)
+        self.RightLineEdit.setInputMask("")
+        self.RightLineEdit.setText("")
+        self.RightLineEdit.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+        self.RightLineEdit.setPlaceholderText("Enter Right Value")
+        self.RightLineEdit.setObjectName("RightLineEdit")
+        self.horizontalLayout_3.addWidget(self.RightLineEdit)
+        self.RightPushButton = QtWidgets.QPushButton(self.centralwidget)
+        self.RightPushButton.setObjectName("RightPushButton")
+        self.horizontalLayout_3.addWidget(self.RightPushButton)
+        self.verticalLayout.addLayout(self.horizontalLayout_3)
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
         self.LeftLineEdit = QtWidgets.QLineEdit(self.centralwidget)
@@ -132,6 +137,124 @@ class Ui_PrismsMainWindow(object):
         self.retranslateUi(PrismsMainWindow)
         QtCore.QMetaObject.connectSlotsByName(PrismsMainWindow)
 
+        # Zaber Motion GUI connection code
+        self.zaberSerialCheck()
+
+        self.ResetZaberPushButton.clicked.connect(self.resetZaberMotion)
+        self.UpPushButton.clicked.connect(self.upClick)
+        self.DownPushButton.clicked.connect(self.downClick)
+        self.RightPushButton.clicked.connect(self.rightClick)
+        self.LeftPushButton.clicked.connect(self.leftClick)
+
+    #Zaber Motion Serial Port Check
+    def zaberSerialCheck(self):
+        try:
+            serialPortObj = serial.Serial(con.ZABER_SERIAL_PORT_NAME)
+
+            if serialPortObj.isOpen():
+                print('\nPort Open! \nStatus -> ', serialPortObj)
+
+        except:
+            self.zaberPopupFalse()
+
+    def zaberPopupFalse(self):
+        msg = QtWidgets.QMessageBox()
+        msg.setWindowTitle(f"Zaber {con.ZABER_SERIAL_PORT_NAME} Port not found!")
+        msg.setText(f"Could not find {con.ZABER_SERIAL_PORT_NAME} port for Zaber Motion. Check the port again and the connection!")
+        msg.setIcon(QtWidgets.QMessageBox.Icon.Critical)
+        x = msg.exec()
+
+    #Zaber Motion GUI functions
+    def resetZaberMotion(self):
+        msg = "You've clicked the Reset Zaber Motion Button."
+        self.logSend(msg)
+
+        zaber_movements.moves.home()
+
+    def upClick(self):
+        msg = "You've clicked the Up Button."
+        self.logSend(msg)
+
+        direction = 'up'
+
+        if self.UpLineEdit.text() == '':
+            value = 1
+            self.move = zaber_movements.movement_main.MovementMain(direction, value)
+            self.move.start()
+            msg = f"Moved {direction} with value {value}"
+            self.logSend(msg)
+        else:
+            value = int(self.UpLineEdit.text())
+            self.move = zaber_movements.movement_main.MovementMain(direction, value)
+            self.move.start()
+            msg = f"Moved {direction} with value {value}"
+            self.logSend(msg)
+        self.UpLineEdit.clear()
+
+    def downClick(self):
+        msg = "You've clicked the Down Button."
+        self.logSend(msg)
+
+        direction = 'down'
+
+        if self.DownLineEdit.text() == '':
+            value = -1
+            self.move = zaber_movements.movement_main.MovementMain(direction, value)
+            self.move.start()
+            msg = f"Moved {direction} with value {value}"
+            self.logSend(msg)
+        else:
+            value = -abs(int(self.DownLineEdit.text()))
+            self.move = zaber_movements.movement_main.MovementMain(direction, value)
+            self.move.start()
+            msg = f"Moved {direction} with value {value}"
+            self.logSend(msg)
+        self.DownLineEdit.clear()
+
+    def rightClick(self):
+        msg = "You've clicked the Right Button."
+        self.logSend(msg)
+
+        direction = 'right'
+
+        if self.RightLineEdit.text() == '':
+            value = -1
+            self.move = zaber_movements.movement_main.MovementMain(direction, value)
+            self.move.start()
+            msg = f"Moved {direction} with value {value}"
+            self.logSend(msg)
+        else:
+            value = -abs(int(self.RightLineEdit.text()))
+            self.move = zaber_movements.movement_main.MovementMain(direction, value)
+            self.move.start()
+            msg = f"Moved {direction} with value {value}"
+            self.logSend(msg)
+        self.RightLineEdit.clear()
+
+    def leftClick(self):
+        msg = "You've clicked the Left Button."
+        self.logSend(msg)
+
+        direction = 'left'
+
+        if self.LeftLineEdit.text() == '':
+            value = 1
+            self.move = zaber_movements.movement_main.MovementMain(direction, value)
+            self.move.start()
+            msg = f"Moved {direction} with value {value}"
+            self.logSend(msg)
+        else:
+            value = int(self.LeftLineEdit.text())
+            self.move = zaber_movements.movement_main.MovementMain(direction, value)
+            self.move.start()
+            msg = f"Moved {direction} with value {value}"
+            self.logSend(msg)
+        self.LeftLineEdit.clear()
+
+    # Send to Plain Text Log on the GUI
+    def logSend(self, msg):
+        self.LogPlainTextEdit.appendPlainText(msg)
+
     def closeEvent(self, event):
         # self.thread.stop()
         event.accept()
@@ -145,8 +268,8 @@ class Ui_PrismsMainWindow(object):
         self.ResetFilterPushButton.setText(_translate("PrismsMainWindow", "Reset Filter"))
         self.SetFilterPushButton.setText(_translate("PrismsMainWindow", "Set Filter"))
         self.UpPushButton.setText(_translate("PrismsMainWindow", "UP"))
-        self.RightPushButton.setText(_translate("PrismsMainWindow", "RIGHT"))
         self.DownPushButton.setText(_translate("PrismsMainWindow", "DOWN"))
+        self.RightPushButton.setText(_translate("PrismsMainWindow", "RIGHT"))
         self.LeftPushButton.setText(_translate("PrismsMainWindow", "LEFT"))
         self.ResetZaberPushButton.setText(_translate("PrismsMainWindow", "Reset Zaber Motion"))
 
