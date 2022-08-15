@@ -3,7 +3,10 @@ from filter_wheel import filter_conversion as conv
 from filter_wheel import filters_and_speeds as fns
 import constants as con
 
-ser = serial.Serial(con.FILTER_WHEEL_PORT_NAME, timeout=1)
+try:
+	ser = serial.Serial(con.FILTER_WHEEL_PORT_NAME, timeout=1)
+except:
+	print("Filter Wheel USB not connected.")
 
 def checkUSBConnection():
 	msg1 = con.FILTER_WHEEL_PORT_NAME + ' is open'
