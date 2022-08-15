@@ -7,12 +7,12 @@
 
 
 from PyQt6 import QtCore, QtGui, QtWidgets
+import sys
 import zaber_movements
 import constants as con
 import serial
 
 from zaber_movements.movement_main import MovementMain
-
 
 class Ui_PrismsMainWindow(object):
     def setupUi(self, PrismsMainWindow):
@@ -38,6 +38,9 @@ class Ui_PrismsMainWindow(object):
         self.verticalLayout_4.addLayout(self.CameraVerticalLayout)
         self.horizontalLayout_7 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_7.setObjectName("horizontalLayout_7")
+        self.StartVideoPushButton = QtWidgets.QPushButton(self.centralwidget)
+        self.StartVideoPushButton.setObjectName("StartVideoPushButton")
+        self.horizontalLayout_7.addWidget(self.StartVideoPushButton)
         self.SavePicturePushButton = QtWidgets.QPushButton(self.centralwidget)
         self.SavePicturePushButton.setObjectName("SavePicturePushButton")
         self.horizontalLayout_7.addWidget(self.SavePicturePushButton)
@@ -146,7 +149,8 @@ class Ui_PrismsMainWindow(object):
         self.RightPushButton.clicked.connect(self.rightClick)
         self.LeftPushButton.clicked.connect(self.leftClick)
 
-    #Zaber Motion Serial Port Check
+        # Zaber Motion Serial Port Check
+
     def zaberSerialCheck(self):
         try:
             serialPortObj = serial.Serial(con.ZABER_SERIAL_PORT_NAME)
@@ -160,11 +164,13 @@ class Ui_PrismsMainWindow(object):
     def zaberPopupFalse(self):
         msg = QtWidgets.QMessageBox()
         msg.setWindowTitle(f"Zaber {con.ZABER_SERIAL_PORT_NAME} Port not found!")
-        msg.setText(f"Could not find {con.ZABER_SERIAL_PORT_NAME} port for Zaber Motion. Check the port again and the connection!")
+        msg.setText(
+            f"Could not find {con.ZABER_SERIAL_PORT_NAME} port for Zaber Motion. Check the port again and the connection!")
         msg.setIcon(QtWidgets.QMessageBox.Icon.Critical)
         x = msg.exec()
 
-    #Zaber Motion GUI functions
+        # Zaber Motion GUI functions
+
     def resetZaberMotion(self):
         msg = "You've clicked the Reset Zaber Motion Button."
         self.logSend(msg)
@@ -251,7 +257,8 @@ class Ui_PrismsMainWindow(object):
             self.logSend(msg)
         self.LeftLineEdit.clear()
 
-    # Send to Plain Text Log on the GUI
+        # Send to Plain Text Log on the GUI
+
     def logSend(self, msg):
         self.LogPlainTextEdit.appendPlainText(msg)
 
@@ -262,6 +269,7 @@ class Ui_PrismsMainWindow(object):
     def retranslateUi(self, PrismsMainWindow):
         _translate = QtCore.QCoreApplication.translate
         PrismsMainWindow.setWindowTitle(_translate("PrismsMainWindow", "PRISMS v2.0"))
+        self.StartVideoPushButton.setText(_translate("PrismsMainWindow", "Start Video"))
         self.SavePicturePushButton.setText(_translate("PrismsMainWindow", "Save"))
         self.HomePushButton.setText(_translate("PrismsMainWindow", "Home"))
         self.SelectFilterWheelLabel.setText(_translate("PrismsMainWindow", "Select Filter Wheel:"))
@@ -275,7 +283,6 @@ class Ui_PrismsMainWindow(object):
 
 
 if __name__ == "__main__":
-    import sys
     app = QtWidgets.QApplication(sys.argv)
     PrismsMainWindow = QtWidgets.QMainWindow()
     ui = Ui_PrismsMainWindow()
