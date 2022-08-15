@@ -166,7 +166,19 @@ class Ui_PrismsMainWindow(object):
         # Connect the image acquired Signal to a handler
         self.camThread.image_acquired.connect(self.update_image)
 
+        # Starting Camera Thread
         self.camThread.start()
+        self.StartVideoPushButton.setEnabled(False)
+        self.SavePicturePushButton.setEnabled(True)
+
+        # Connection Home button to home action
+        self.HomePushButton.clicked.connect(self.homeAction)
+
+        # Connection to Start Video Button to start video Action
+        self.StartVideoPushButton.clicked.connect(self.startVideoAction)
+
+        # Connection to save image button to save image action
+        self.SavePicturePushButton.clicked.connect(self.savePictureAction)
 
         # Filter Wheel GUI Connection code
         # self.filterWheelCheck()
@@ -201,6 +213,24 @@ class Ui_PrismsMainWindow(object):
         appropriate Signal is emitted.
         """
         self.image.setImage(data)
+
+    # Start Video function
+    def startVideoAction(self):
+        self.StartVideoPushButton.setEnabled(False)
+        self.camThread.start()
+        self.SavePicturePushButton.setEnabled(True)
+
+    # Save Image Function
+    def savePictureAction(self):
+        self.SavePicturePushButton.setEnabled(False)
+        self.camThread.stop()
+        self.StartVideoPushButton.setEnabled(True)
+
+    def homeAction(self):
+        msg = "Home was pressed. Reset complete."
+        self.resetZaberMotion()
+        self.resetFilterAction()
+        self.logSend(msg)
 
     # Filter Wheel Functions
     def resetFilterAction(self):
