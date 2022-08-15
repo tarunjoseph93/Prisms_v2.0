@@ -11,6 +11,8 @@ import sys
 import zaber_movements
 import constants as con
 import serial
+from filter_wheel import filters_and_speeds as fns
+from filter_wheel import filter_wheel_connections as cfw
 
 from zaber_movements.movement_main import MovementMain
 
@@ -140,6 +142,21 @@ class Ui_PrismsMainWindow(object):
         self.retranslateUi(PrismsMainWindow)
         QtCore.QMetaObject.connectSlotsByName(PrismsMainWindow)
 
+        # Filter Wheel GUI Connection code
+        self.filterWheelCheck()
+
+        # Setting lists from filters_and_speeds.py
+        self.FilterWheelComboBox.addItems(fns.filterList)
+
+        # Setting default values for the list
+        self.FilterWheelComboBox.setCurrentIndex(fns.filterList.index("5"))
+
+        # Reset Filter Wheel
+        self.ResetFilterPushButton.clicked.connect(self.resetFilterAction)
+
+        # Set Filter Wheel
+        self.SetFilterPushButton.clicked.connect(self.setFilterAction)
+
         # Zaber Motion GUI connection code
         self.zaberSerialCheck()
 
@@ -149,8 +166,37 @@ class Ui_PrismsMainWindow(object):
         self.RightPushButton.clicked.connect(self.rightClick)
         self.LeftPushButton.clicked.connect(self.leftClick)
 
-        # Zaber Motion Serial Port Check
+    # Filter Wheel Functions
+    def resetFilterAction(self):
+        reset = cfw.resetWheel()
+        self.logSend(reset)
 
+    def setFilterAction(self):
+        currentFilter = int(self.FilterWheelComboBox.currentText())
+        currentSpeed = 7
+        msg = cfw.setFilterWheel(currentFilter, currentSpeed)
+        self.logSend(msg)
+        # self.filterLog.setPlainText("Filter: {0}; Speed: {1}".format(currentFilter, currentSpeed))
+
+    def filterWheelCheck(self):
+        try:
+            filterWheelSerialPortObj = serial.Serial(con.FILTER_WHEEL_PORT_NAME)
+
+            if filterWheelSerialPortObj.isOpen():
+                print('\nPort Open! \nStatus -> ', filterWheelSerialPortObj)
+        except:
+            self.filterPopupFalse()
+
+    def filterPopupFalse(self):
+        msg = QtWidgets.QMessageBox()
+        msg.setWindowTitle(f"Filter Wheel {con.FILTER_WHEEL_PORT_NAME} Port not found!")
+        msg.setText(
+            f"Could not find {con.FILTER_WHEEL_PORT_NAME} port for Filter Wheel. Check the port again and the connection!")
+        msg.setIcon(QtWidgets.QMessageBox.Icon.Critical)
+        x = msg.exec()
+
+
+    # Zaber Motion Functions
     def zaberSerialCheck(self):
         try:
             serialPortObj = serial.Serial(con.ZABER_SERIAL_PORT_NAME)
