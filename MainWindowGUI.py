@@ -12,11 +12,13 @@ import zaber_movements
 import constants as con
 import serial
 import pyqtgraph as pg
+from PIL import Image
 from filter_wheel import filters_and_speeds as fns
 from filter_wheel import filter_wheel_connections as cfw
 
 from zaber_movements.movement_main import MovementMain
 from zyla_camera import camera_thread as ct
+from zyla_camera import picture_thread as pt
 
 class Ui_PrismsMainWindow(object):
     def setupUi(self, PrismsMainWindow):
@@ -162,14 +164,17 @@ class Ui_PrismsMainWindow(object):
         self.horizontalLayout_8.setStretch(0, 1)
 
         # Create object of Camera Thread class
-        self.camThread = ct.Thread()
+        self.camThread = ct.CameraThread()
         # Connect the image acquired Signal to a handler
         self.camThread.image_acquired.connect(self.update_image)
 
+        # Create object of Picture Thread class
+        self.pictureThread = pt.PictureThread()
+        # Connect the image acquired Signal to a handler
+        self.pictureThread.image_captured.connect(self.savePicture)
+
         # Starting Camera Thread
-        self.camThread.start()
-        self.StartVideoPushButton.setEnabled(False)
-        self.SavePicturePushButton.setEnabled(True)
+        self.startVideoAction()
 
         # Connection Home button to home action
         self.HomePushButton.clicked.connect(self.homeAction)
@@ -205,6 +210,13 @@ class Ui_PrismsMainWindow(object):
         self.LeftPushButton.clicked.connect(self.leftClick)
 
     # Zyla Camera Functions
+    # Slot for saving picture from Picture thread
+    def savePicture(self, data):
+        print(data)
+        # im = Image.fromarray(data)
+        # im.save(f"my_image.jpeg")
+
+    # Slot for video feed data acquisition from Camera Thread
     def update_image(self, data):
         """
         Update the plot with new image data.
@@ -217,14 +229,22 @@ class Ui_PrismsMainWindow(object):
     # Start Video function
     def startVideoAction(self):
         self.StartVideoPushButton.setEnabled(False)
-        self.camThread.start()
+
+        if self.pictureThread.isRunning():
+            self.pictureThread.stop()
+
         self.SavePicturePushButton.setEnabled(True)
+        self.camThread.start()
 
     # Save Image Function
     def savePictureAction(self):
         self.SavePicturePushButton.setEnabled(False)
-        self.camThread.stop()
+
+        if self.camThread.isRunning():
+            self.camThread.stop()
+
         self.StartVideoPushButton.setEnabled(True)
+        self.pictureThread.start()
 
     def homeAction(self):
         msg = "Home was pressed. Reset complete."
