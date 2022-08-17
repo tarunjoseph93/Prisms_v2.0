@@ -12,13 +12,14 @@ import zaber_movements
 import constants as con
 import serial
 import pyqtgraph as pg
+from matplotlib import pyplot as plt
 from PIL import Image
 from filter_wheel import filters_and_speeds as fns
 from filter_wheel import filter_wheel_connections as cfw
 
 from zaber_movements.movement_main import MovementMain
 from zyla_camera import camera_thread as ct
-from zyla_camera import picture_thread as pt
+
 
 class Ui_PrismsMainWindow(object):
     def setupUi(self, PrismsMainWindow):
@@ -155,7 +156,7 @@ class Ui_PrismsMainWindow(object):
 
         # Create the ploting axes in the GraphicsLayoutWidget
         self.plot = self.glw.addPlot()
-        self.plot.setLabels(left="Pixel #", bottom="Pixel #")
+        self.plot.setLabels(left="Pixel Height", bottom="Pixel Width")
         # Create the image item and add it to the plot
         self.image = pg.ImageItem()
         self.plot.addItem(self.image)
@@ -168,13 +169,11 @@ class Ui_PrismsMainWindow(object):
         # Connect the image acquired Signal to a handler
         self.camThread.image_acquired.connect(self.update_image)
 
-        # Create object of Picture Thread class
-        self.pictureThread = pt.PictureThread()
-        # Connect the image acquired Signal to a handler
-        self.pictureThread.image_captured.connect(self.savePicture)
-
         # Starting Camera Thread
         self.startVideoAction()
+
+        # Initialisation of image save property
+        self.last_image = None
 
         # Connection Home button to home action
         self.HomePushButton.clicked.connect(self.homeAction)
@@ -186,7 +185,7 @@ class Ui_PrismsMainWindow(object):
         self.SavePicturePushButton.clicked.connect(self.savePictureAction)
 
         # Filter Wheel GUI Connection code
-        # self.filterWheelCheck()
+        self.filterWheelCheck()
 
         # Setting lists from filters_and_speeds.py
         self.FilterWheelComboBox.addItems(fns.filterList)
@@ -201,7 +200,7 @@ class Ui_PrismsMainWindow(object):
         self.SetFilterPushButton.clicked.connect(self.setFilterAction)
 
         # Zaber Motion GUI connection code
-        # self.zaberSerialCheck()
+        self.zaberSerialCheck()
 
         self.ResetZaberPushButton.clicked.connect(self.resetZaberMotion)
         self.UpPushButton.clicked.connect(self.upClick)
@@ -210,12 +209,6 @@ class Ui_PrismsMainWindow(object):
         self.LeftPushButton.clicked.connect(self.leftClick)
 
     # Zyla Camera Functions
-    # Slot for saving picture from Picture thread
-    def savePicture(self, data):
-        print(data)
-        # im = Image.fromarray(data)
-        # im.save(f"my_image.jpeg")
-
     # Slot for video feed data acquisition from Camera Thread
     def update_image(self, data):
         """
@@ -224,14 +217,26 @@ class Ui_PrismsMainWindow(object):
         This should only be called from within the Qt event loop thread, such as when the
         appropriate Signal is emitted.
         """
+        # Store reference to data in image storage property
+        self.last_image = data
+
         self.image.setImage(data)
+
+    # Save Picture from update_image()
+    def savePicture(self):
+        print(f"Data from last image: {self.last_image}")
+        print(f"Length of last image: {len(self.last_image)}")
+        # plt.imshow(data, cmap="gray")
+        # plt.show()
+        # im = Image.fromarray(data)
+        # im.save(f"my_image.jpeg")
 
     # Start Video function
     def startVideoAction(self):
         self.StartVideoPushButton.setEnabled(False)
 
-        if self.pictureThread.isRunning():
-            self.pictureThread.stop()
+        # if self.pictureThread.isRunning():
+        #     self.pictureThread.stop()
 
         self.SavePicturePushButton.setEnabled(True)
         self.camThread.start()
@@ -239,15 +244,13 @@ class Ui_PrismsMainWindow(object):
     # Save Image Function
     def savePictureAction(self):
         self.SavePicturePushButton.setEnabled(False)
-
-        if self.camThread.isRunning():
-            self.camThread.stop()
-
+        self.camThread.stop()
+        self.savePicture()
         self.StartVideoPushButton.setEnabled(True)
-        self.pictureThread.start()
+        # self.pictureThread.start()
 
     def homeAction(self):
-        msg = "Home was pressed. Reset complete."
+        msg = "Home set. Reset complete."
         self.resetZaberMotion()
         self.resetFilterAction()
         self.logSend(msg)
@@ -356,13 +359,13 @@ class Ui_PrismsMainWindow(object):
         direction = 'right'
 
         if self.RightLineEdit.text() == '':
-            value = -1
+            value = 1
             self.move = zaber_movements.movement_main.MovementMain(direction, value)
             self.move.start()
             msg = f"Moved {direction} with value {value}"
             self.logSend(msg)
         else:
-            value = -abs(int(self.RightLineEdit.text()))
+            value = int(self.RightLineEdit.text())
             self.move = zaber_movements.movement_main.MovementMain(direction, value)
             self.move.start()
             msg = f"Moved {direction} with value {value}"
@@ -376,13 +379,13 @@ class Ui_PrismsMainWindow(object):
         direction = 'left'
 
         if self.LeftLineEdit.text() == '':
-            value = 1
+            value = -1
             self.move = zaber_movements.movement_main.MovementMain(direction, value)
             self.move.start()
             msg = f"Moved {direction} with value {value}"
             self.logSend(msg)
         else:
-            value = int(self.LeftLineEdit.text())
+            value = -abs(int(self.LeftLineEdit.text()))
             self.move = zaber_movements.movement_main.MovementMain(direction, value)
             self.move.start()
             msg = f"Moved {direction} with value {value}"

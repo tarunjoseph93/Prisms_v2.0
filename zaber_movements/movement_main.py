@@ -25,14 +25,14 @@ class MovementMain():
             self.stop()
 
             if self.direction == "left":
-                if self.value == 1:
+                if self.value == -1:
                     mv.relativeMovement(self.direction, self.value)
                 else:
                     mv.absoluteMovement(self.direction, self.value)
             self.stop()
 
             if self.direction == "right":
-                if self.value == -1:
+                if self.value == 1:
                     mv.relativeMovement(self.direction, self.value)
                 else:
                     mv.absoluteMovement(self.direction, self.value)
