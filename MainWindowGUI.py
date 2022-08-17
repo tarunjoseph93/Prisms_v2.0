@@ -12,6 +12,8 @@ import zaber_movements
 import constants as con
 import serial
 import pyqtgraph as pg
+
+from datetime import datetime
 from matplotlib import pyplot as plt
 from PIL import Image
 from filter_wheel import filters_and_speeds as fns
@@ -225,7 +227,21 @@ class Ui_PrismsMainWindow(object):
     # Save Picture from update_image()
     def savePicture(self):
         print(f"Data from last image: {self.last_image}")
-        print(f"Length of last image: {len(self.last_image)}")
+        print(f"Dimensions from last image: {self.last_image.ndim}")
+        print(f"Shape from last image: {self.last_image.shape}")
+        print(f"Size of last image: {self.last_image.size}")
+
+        self.dt = datetime.now()
+        self.ts = datetime.timestamp(self.dt)
+        self.date_time = datetime.fromtimestamp(self.ts)
+        self.str_date_time = self.date_time.strftime("%d_%m_%Y_%H_%M_%S")
+
+        print(self.str_date_time)
+
+        self.new_file = open(f'{con.PATH_TO_SAVE_IMAGE}\\{self.str_date_time}.bin', 'w')
+        self.last_image.astype('int16').tofile(self.new_file)
+        self.new_file.close()
+
         # plt.imshow(data, cmap="gray")
         # plt.show()
         # im = Image.fromarray(data)
