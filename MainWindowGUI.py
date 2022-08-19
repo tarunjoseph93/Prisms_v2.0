@@ -243,6 +243,9 @@ class Ui_PrismsMainWindow(object):
         self.last_image.astype('uint16').tofile(self.new_file)
         self.new_file.close()
 
+        msg = f"Image saved! Filename: {self.str_date_time}.bin \n File Path: {con.PATH_TO_SAVE_IMAGE}"
+        self.logSend(msg)
+
         # plt.imshow(data, cmap="gray")
         # plt.show()
         # im = Image.fromarray(data)
@@ -257,6 +260,9 @@ class Ui_PrismsMainWindow(object):
 
         self.SavePicturePushButton.setEnabled(True)
         self.camThread.start()
+
+        msg = f"Video started!"
+        self.logSend(msg)
 
     # Save Image Function
     def savePictureAction(self):

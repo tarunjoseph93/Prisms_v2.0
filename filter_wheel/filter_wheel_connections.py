@@ -2,7 +2,9 @@ import serial
 from filter_wheel import filter_conversion as conv
 from filter_wheel import filters_and_speeds as fns
 import constants as con
+from PyQt6.QtCore import pyqtSignal, pyqtSlot,QThread, Qt
 
+filter_connection_exception = pyqtSignal(str)
 def resetWheel():
 	with serial.Serial(con.FILTER_WHEEL_PORT_NAME, timeout=1) as filterSerial:
 		response = conv.resetWheelWithStruct()
