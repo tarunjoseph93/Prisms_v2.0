@@ -188,12 +188,14 @@ class Ui_PrismsMainWindow(object):
 
         # Filter Wheel GUI Connection code
         self.filterWheelCheck()
+        # self.filterWheel = cfw.FilterWheel()
+        # self.filterWheel.serial_port_exception.connect(self.filterWheelCheck)
 
         # Setting lists from filters_and_speeds.py
         self.FilterWheelComboBox.addItems(fns.filterList)
 
         # Setting default values for the list
-        self.FilterWheelComboBox.setCurrentIndex(fns.filterList.index("5"))
+        self.FilterWheelComboBox.setCurrentIndex(fns.filterList.index("0"))
 
         # Reset Filter Wheel
         self.ResetFilterPushButton.clicked.connect(self.resetFilterAction)
@@ -209,6 +211,9 @@ class Ui_PrismsMainWindow(object):
         self.DownPushButton.clicked.connect(self.downClick)
         self.RightPushButton.clicked.connect(self.rightClick)
         self.LeftPushButton.clicked.connect(self.leftClick)
+
+        # Initialise Home Sequence
+        self.homeAction()
 
     # Zyla Camera Functions
     # Slot for video feed data acquisition from Camera Thread
@@ -275,29 +280,31 @@ class Ui_PrismsMainWindow(object):
     # Filter Wheel Functions
     def resetFilterAction(self):
         reset = cfw.resetWheel()
-        self.logSend(reset)
+        msg = f"Filter wheel has been reset. Code received: {reset}"
+        self.FilterWheelComboBox.setCurrentIndex(0)
+        self.logSend(msg)
 
     def setFilterAction(self):
         currentFilter = int(self.FilterWheelComboBox.currentText())
         currentSpeed = 7
         msg = cfw.setFilterWheel(currentFilter, currentSpeed)
-        self.logSend(msg)
+        message = f"Filter Wheel Set at {currentFilter}. Code received: {msg}"
+        self.logSend(message)
         # self.filterLog.setPlainText("Filter: {0}; Speed: {1}".format(currentFilter, currentSpeed))
 
     def filterWheelCheck(self):
         try:
-            filterWheelSerialPortObj = serial.Serial(con.FILTER_WHEEL_PORT_NAME)
-
-            if filterWheelSerialPortObj.isOpen():
-                print('\nPort Open! \nStatus -> ', filterWheelSerialPortObj)
+            filterSerial = serial.Serial(con.FILTER_WHEEL_PORT_NAME, timeout=1)
+            if filterSerial.isOpen():
+                print('\nPort Open! \nStatus -> ', filterSerial)
         except:
-            self.filterPopupFalse()
+            msg = f"Filter Wheel USB {con.FILTER_WHEEL_PORT_NAME} not connected."
+            self.filterPopupFalse(msg)
 
-    def filterPopupFalse(self):
+    def filterPopupFalse(self, message):
         msg = QtWidgets.QMessageBox()
         msg.setWindowTitle(f"Filter Wheel {con.FILTER_WHEEL_PORT_NAME} Port not found!")
-        msg.setText(
-            f"Could not find {con.FILTER_WHEEL_PORT_NAME} port for Filter Wheel. Check the port again and the connection!")
+        msg.setText(message)
         msg.setIcon(QtWidgets.QMessageBox.Icon.Critical)
         x = msg.exec()
 

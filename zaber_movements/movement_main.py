@@ -1,7 +1,7 @@
 from PyQt6.QtCore import QThread
 import zaber_movements.moves as mv
 
-class MovementMain():
+class MovementMain:
     def __init__(self, direction, value, parent=None):
         self.MovementActive = None
         self.direction = direction
