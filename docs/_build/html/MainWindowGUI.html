@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MainWindowGUI module &mdash; PRISMS II 1.0.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="constants module" href="constants.html" />
+    <link rel="prev" title="PRISMS II" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> PRISMS II
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">PRISMS II</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">MainWindowGUI module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constants.html">constants module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setup.html">setup module</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">PRISMS II</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="modules.html">PRISMS II</a> &raquo;</li>
+      <li>MainWindowGUI module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/MainWindowGUI.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-MainWindowGUI">
+<span id="mainwindowgui-module"></span><h1>MainWindowGUI module<a class="headerlink" href="#module-MainWindowGUI" title="Permalink to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="MainWindowGUI.Ui_PrismsMainWindow">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">MainWindowGUI.</span></span><span class="sig-name descname"><span class="pre">Ui_PrismsMainWindow</span></span><a class="reference internal" href="_modules/MainWindowGUI.html#Ui_PrismsMainWindow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainWindowGUI.Ui_PrismsMainWindow" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Ui_PrismsMainWindow Class is the main PyQt6 class that contains all the functions and
+UI elements relevant to the Main GUI for the PRISMS II Application.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="MainWindowGUI.Ui_PrismsMainWindow.closeEvent">
+<span class="sig-name descname"><span class="pre">closeEvent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainWindowGUI.html#Ui_PrismsMainWindow.closeEvent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainWindowGUI.Ui_PrismsMainWindow.closeEvent" title="Permalink to this definition"></a></dt>
+<dd><p>This function is called when the program is terminated. The Thread is automatically
+stopped and killed.
+:param event: event</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainWindowGUI.Ui_PrismsMainWindow.downClick">
+<span class="sig-name descname"><span class="pre">downClick</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainWindowGUI.html#Ui_PrismsMainWindow.downClick"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainWindowGUI.Ui_PrismsMainWindow.downClick" title="Permalink to this definition"></a></dt>
+<dd><p>This is the function used when the Down button is clicked. It sends data to either the
+relative motion function or the absolute motion function, based on whether the text
+field is empty or not.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainWindowGUI.Ui_PrismsMainWindow.filterPopupFalse">
+<span class="sig-name descname"><span class="pre">filterPopupFalse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainWindowGUI.html#Ui_PrismsMainWindow.filterPopupFalse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainWindowGUI.Ui_PrismsMainWindow.filterPopupFalse" title="Permalink to this definition"></a></dt>
+<dd><p>This is the popup for the filter wheel if the COM port check fails.
+:param message: string</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainWindowGUI.Ui_PrismsMainWindow.filterWheelCheck">
+<span class="sig-name descname"><span class="pre">filterWheelCheck</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainWindowGUI.html#Ui_PrismsMainWindow.filterWheelCheck"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainWindowGUI.Ui_PrismsMainWindow.filterWheelCheck" title="Permalink to this definition"></a></dt>
+<dd><p>This is a COM Port check for the filter wheel.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainWindowGUI.Ui_PrismsMainWindow.homeAction">
+<span class="sig-name descname"><span class="pre">homeAction</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainWindowGUI.html#Ui_PrismsMainWindow.homeAction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainWindowGUI.Ui_PrismsMainWindow.homeAction" title="Permalink to this definition"></a></dt>
+<dd><p>Calls all the home functions for Zaber motion and Filter Wheel.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainWindowGUI.Ui_PrismsMainWindow.leftClick">
+<span class="sig-name descname"><span class="pre">leftClick</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainWindowGUI.html#Ui_PrismsMainWindow.leftClick"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainWindowGUI.Ui_PrismsMainWindow.leftClick" title="Permalink to this definition"></a></dt>
+<dd><p>This is the function used when the Left button is clicked. It sends data to either the
+relative motion function or the absolute motion function, based on whether the text
+field is empty or not.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainWindowGUI.Ui_PrismsMainWindow.logSend">
+<span class="sig-name descname"><span class="pre">logSend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainWindowGUI.html#Ui_PrismsMainWindow.logSend"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainWindowGUI.Ui_PrismsMainWindow.logSend" title="Permalink to this definition"></a></dt>
+<dd><p>This is the function that passes the log message to the plain text field.
+:param msg: string</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainWindowGUI.Ui_PrismsMainWindow.resetFilterAction">
+<span class="sig-name descname"><span class="pre">resetFilterAction</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainWindowGUI.html#Ui_PrismsMainWindow.resetFilterAction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainWindowGUI.Ui_PrismsMainWindow.resetFilterAction" title="Permalink to this definition"></a></dt>
+<dd><p>Resets the Filter Wheel to its default position</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainWindowGUI.Ui_PrismsMainWindow.resetZaberMotion">
+<span class="sig-name descname"><span class="pre">resetZaberMotion</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainWindowGUI.html#Ui_PrismsMainWindow.resetZaberMotion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainWindowGUI.Ui_PrismsMainWindow.resetZaberMotion" title="Permalink to this definition"></a></dt>
+<dd><p>Resets Zaber Motion device to its default position.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainWindowGUI.Ui_PrismsMainWindow.retranslateUi">
+<span class="sig-name descname"><span class="pre">retranslateUi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">PrismsMainWindow</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainWindowGUI.html#Ui_PrismsMainWindow.retranslateUi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainWindowGUI.Ui_PrismsMainWindow.retranslateUi" title="Permalink to this definition"></a></dt>
+<dd><p>This function re-translates the UI to form unique names for each UI element.
+:param PrismsMainWindow: object</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainWindowGUI.Ui_PrismsMainWindow.rightClick">
+<span class="sig-name descname"><span class="pre">rightClick</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainWindowGUI.html#Ui_PrismsMainWindow.rightClick"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainWindowGUI.Ui_PrismsMainWindow.rightClick" title="Permalink to this definition"></a></dt>
+<dd><p>This is the function used when the Right button is clicked. It sends data to either the
+relative motion function or the absolute motion function, based on whether the text
+field is empty or not.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainWindowGUI.Ui_PrismsMainWindow.savePicture">
+<span class="sig-name descname"><span class="pre">savePicture</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainWindowGUI.html#Ui_PrismsMainWindow.savePicture"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainWindowGUI.Ui_PrismsMainWindow.savePicture" title="Permalink to this definition"></a></dt>
+<dd><p>Function that saves the last image from the camera. This function saves the image
+as a binary file with a timestamp in the form DD/MM/YY-HH/MM/SS</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainWindowGUI.Ui_PrismsMainWindow.savePictureAction">
+<span class="sig-name descname"><span class="pre">savePictureAction</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainWindowGUI.html#Ui_PrismsMainWindow.savePictureAction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainWindowGUI.Ui_PrismsMainWindow.savePictureAction" title="Permalink to this definition"></a></dt>
+<dd><p>This function is used to enable the save picture action by stopping the video.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainWindowGUI.Ui_PrismsMainWindow.setFilterAction">
+<span class="sig-name descname"><span class="pre">setFilterAction</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainWindowGUI.html#Ui_PrismsMainWindow.setFilterAction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainWindowGUI.Ui_PrismsMainWindow.setFilterAction" title="Permalink to this definition"></a></dt>
+<dd><p>Sets filter wheel based on the selected option in dropdown</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainWindowGUI.Ui_PrismsMainWindow.setupUi">
+<span class="sig-name descname"><span class="pre">setupUi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">PrismsMainWindow</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainWindowGUI.html#Ui_PrismsMainWindow.setupUi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainWindowGUI.Ui_PrismsMainWindow.setupUi" title="Permalink to this definition"></a></dt>
+<dd><p>Creates the GUI for the main window application by creating all UI elements
+:param PrismsMainWindow: object</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainWindowGUI.Ui_PrismsMainWindow.startVideoAction">
+<span class="sig-name descname"><span class="pre">startVideoAction</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainWindowGUI.html#Ui_PrismsMainWindow.startVideoAction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainWindowGUI.Ui_PrismsMainWindow.startVideoAction" title="Permalink to this definition"></a></dt>
+<dd><p>This function starts the video thread itself.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainWindowGUI.Ui_PrismsMainWindow.upClick">
+<span class="sig-name descname"><span class="pre">upClick</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainWindowGUI.html#Ui_PrismsMainWindow.upClick"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainWindowGUI.Ui_PrismsMainWindow.upClick" title="Permalink to this definition"></a></dt>
+<dd><p>This is the function used when the Up button is clicked. It sends data to either the
+relative motion function or the absolute motion function, based on whether the text
+field is empty or not.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainWindowGUI.Ui_PrismsMainWindow.update_image">
+<span class="sig-name descname"><span class="pre">update_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainWindowGUI.html#Ui_PrismsMainWindow.update_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainWindowGUI.Ui_PrismsMainWindow.update_image" title="Permalink to this definition"></a></dt>
+<dd><p>Function used to constantly update the Video Feed
+:param data: object</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainWindowGUI.Ui_PrismsMainWindow.zaberPopupFalse">
+<span class="sig-name descname"><span class="pre">zaberPopupFalse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainWindowGUI.html#Ui_PrismsMainWindow.zaberPopupFalse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainWindowGUI.Ui_PrismsMainWindow.zaberPopupFalse" title="Permalink to this definition"></a></dt>
+<dd><p>Popup for Zaber Motion COM port check if it fails.
+:param message: string</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainWindowGUI.Ui_PrismsMainWindow.zaberSerialCheck">
+<span class="sig-name descname"><span class="pre">zaberSerialCheck</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainWindowGUI.html#Ui_PrismsMainWindow.zaberSerialCheck"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainWindowGUI.Ui_PrismsMainWindow.zaberSerialCheck" title="Permalink to this definition"></a></dt>
+<dd><p>COM port check for Zaber Motion.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules.html" class="btn btn-neutral float-left" title="PRISMS II" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="constants.html" class="btn btn-neutral float-right" title="constants module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Tarun Joseph.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -19,7 +19,15 @@ from zaber_movements.movement_main import MovementMain
 from zyla_camera import camera_thread as ct
 
 class Ui_PrismsMainWindow(object):
+    """
+    Ui_PrismsMainWindow Class is the main PyQt6 class that contains all the functions and
+    UI elements relevant to the Main GUI for the PRISMS II Application.
+    """
     def setupUi(self, PrismsMainWindow):
+        """
+        Creates the GUI for the main window application by creating all UI elements
+        :param PrismsMainWindow: object
+        """
         PrismsMainWindow.setObjectName("PrismsMainWindow")
         PrismsMainWindow.resize(1280, 768)
         font = QtGui.QFont()
@@ -183,8 +191,6 @@ class Ui_PrismsMainWindow(object):
 
         # Filter Wheel GUI Connection code
         self.filterWheelCheck()
-        # self.filterWheel = cfw.FilterWheel()
-        # self.filterWheel.serial_port_exception.connect(self.filterWheelCheck)
 
         # Setting lists from filters_and_speeds.py
         self.FilterWheelComboBox.addItems(fns.filterList)
@@ -214,10 +220,8 @@ class Ui_PrismsMainWindow(object):
     # Slot for video feed data acquisition from Camera Thread
     def update_image(self, data):
         """
-        Update the plot with new image data.
-
-        This should only be called from within the Qt event loop thread, such as when the
-        appropriate Signal is emitted.
+        Function used to constantly update the Video Feed
+        :param data: object
         """
         # Store reference to data in image storage property
         self.last_image = data
@@ -226,6 +230,10 @@ class Ui_PrismsMainWindow(object):
 
     # Save Picture from update_image()
     def savePicture(self):
+        """
+        Function that saves the last image from the camera. This function saves the image
+        as a binary file with a timestamp in the form DD/MM/YY-HH/MM/SS
+        """
         print(f"Data from last image: {self.last_image}")
         print(f"Dimensions from last image: {self.last_image.ndim}")
         print(f"Shape from last image: {self.last_image.shape}")
@@ -246,13 +254,11 @@ class Ui_PrismsMainWindow(object):
         msg = f"Image saved! Filename: {self.str_date_time}.bin \n File Path: {con.PATH_TO_SAVE_IMAGE}"
         self.logSend(msg)
 
-        # plt.imshow(data, cmap="gray")
-        # plt.show()
-        # im = Image.fromarray(data)
-        # im.save(f"my_image.jpeg")
-
     # Start Video function
     def startVideoAction(self):
+        """
+        This function starts the video thread itself.
+        """
         self.StartVideoPushButton.setEnabled(False)
 
         # if self.pictureThread.isRunning():
@@ -266,6 +272,9 @@ class Ui_PrismsMainWindow(object):
 
     # Save Image Function
     def savePictureAction(self):
+        """
+        This function is used to enable the save picture action by stopping the video.
+        """
         self.SavePicturePushButton.setEnabled(False)
         self.camThread.stop()
         self.savePicture()
@@ -273,6 +282,9 @@ class Ui_PrismsMainWindow(object):
         # self.pictureThread.start()
 
     def homeAction(self):
+        """
+        Calls all the home functions for Zaber motion and Filter Wheel.
+        """
         msg = "Home set. Reset complete."
         self.resetZaberMotion()
         self.resetFilterAction()
@@ -280,12 +292,18 @@ class Ui_PrismsMainWindow(object):
 
     # Filter Wheel Functions
     def resetFilterAction(self):
+        """
+        Resets the Filter Wheel to its default position
+        """
         reset = cfw.resetWheel()
         msg = f"Filter wheel has been reset. Code received: {reset}"
         self.FilterWheelComboBox.setCurrentIndex(0)
         self.logSend(msg)
 
     def setFilterAction(self):
+        """
+        Sets filter wheel based on the selected option in dropdown
+        """
         currentFilter = int(self.FilterWheelComboBox.currentText())
         currentSpeed = 7
         msg = cfw.setFilterWheel(currentFilter, currentSpeed)
@@ -294,6 +312,9 @@ class Ui_PrismsMainWindow(object):
         # self.filterLog.setPlainText("Filter: {0}; Speed: {1}".format(currentFilter, currentSpeed))
 
     def filterWheelCheck(self):
+        """
+        This is a COM Port check for the filter wheel.
+        """
         try:
             filterSerial = serial.Serial(con.FILTER_WHEEL_PORT_NAME, timeout=1)
             if filterSerial.isOpen():
@@ -303,6 +324,10 @@ class Ui_PrismsMainWindow(object):
             self.filterPopupFalse(msg)
 
     def filterPopupFalse(self, message):
+        """
+        This is the popup for the filter wheel if the COM port check fails.
+        :param message: string
+        """
         msg = QtWidgets.QMessageBox()
         msg.setWindowTitle(f"Filter Wheel {con.FILTER_WHEEL_PORT_NAME} Port not found!")
         msg.setText(message)
@@ -312,6 +337,9 @@ class Ui_PrismsMainWindow(object):
 
     # Zaber Motion Functions
     def zaberSerialCheck(self):
+        """
+        COM port check for Zaber Motion.
+        """
         try:
             serialPortObj = serial.Serial(con.ZABER_SERIAL_PORT_NAME)
 
@@ -323,6 +351,10 @@ class Ui_PrismsMainWindow(object):
             self.zaberPopupFalse(msg)
 
     def zaberPopupFalse(self, message):
+        """
+        Popup for Zaber Motion COM port check if it fails.
+        :param message: string
+        """
         msg = QtWidgets.QMessageBox()
         msg.setWindowTitle(f"Zaber {con.ZABER_SERIAL_PORT_NAME} Port not found!")
         msg.setText(message)
@@ -332,12 +364,20 @@ class Ui_PrismsMainWindow(object):
         # Zaber Motion GUI functions
 
     def resetZaberMotion(self):
+        """
+        Resets Zaber Motion device to its default position.
+        """
         msg = "Zaber Motion has been reset."
         self.logSend(msg)
 
         zaber_movements.moves.home()
 
     def upClick(self):
+        """
+        This is the function used when the Up button is clicked. It sends data to either the
+        relative motion function or the absolute motion function, based on whether the text
+        field is empty or not.
+        """
         msg = "You've clicked the Up Button."
         self.logSend(msg)
 
@@ -358,6 +398,11 @@ class Ui_PrismsMainWindow(object):
         self.UpLineEdit.clear()
 
     def downClick(self):
+        """
+        This is the function used when the Down button is clicked. It sends data to either the
+        relative motion function or the absolute motion function, based on whether the text
+        field is empty or not.
+        """
         msg = "You've clicked the Down Button."
         self.logSend(msg)
 
@@ -378,6 +423,11 @@ class Ui_PrismsMainWindow(object):
         self.DownLineEdit.clear()
 
     def rightClick(self):
+        """
+        This is the function used when the Right button is clicked. It sends data to either the
+        relative motion function or the absolute motion function, based on whether the text
+        field is empty or not.
+        """
         msg = "You've clicked the Right Button."
         self.logSend(msg)
 
@@ -398,6 +448,11 @@ class Ui_PrismsMainWindow(object):
         self.RightLineEdit.clear()
 
     def leftClick(self):
+        """
+        This is the function used when the Left button is clicked. It sends data to either the
+        relative motion function or the absolute motion function, based on whether the text
+        field is empty or not.
+        """
         msg = "You've clicked the Left Button."
         self.logSend(msg)
 
@@ -420,13 +475,26 @@ class Ui_PrismsMainWindow(object):
         # Send to Plain Text Log on the GUI
 
     def logSend(self, msg):
+        """
+        This is the function that passes the log message to the plain text field.
+        :param msg: string
+        """
         self.LogPlainTextEdit.appendPlainText(msg)
 
     def closeEvent(self, event):
+        """
+        This function is called when the program is terminated. The Thread is automatically
+        stopped and killed.
+        :param event: event
+        """
         self.camThread.stop()
         event.accept()
 
     def retranslateUi(self, PrismsMainWindow):
+        """
+        This function re-translates the UI to form unique names for each UI element.
+        :param PrismsMainWindow: object
+        """
         _translate = QtCore.QCoreApplication.translate
         PrismsMainWindow.setWindowTitle(_translate("PrismsMainWindow", "PRISMS v2.0"))
         self.StartVideoPushButton.setText(_translate("PrismsMainWindow", "Start Video"))
